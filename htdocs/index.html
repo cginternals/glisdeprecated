@@ -15,12 +15,10 @@
       <input id="glquery" class="span12 code" type="text" data-provide="typeahead" autocomplete="off">
         <div class="alert alert-info">
         <button type="button" class="close" data-dismiss="alert">×</button>
-        <strong>query usage:</strong> <code>&ltopengl-keyword&gt &ltopengl-version&gt</code> (e.g., <code>glVertex3f 3.2</code>)</div>
+        <strong>query usage:</strong> <code>&ltopengl-keyword&gt [&ltopengl-version&gt]</code> (e.g., <code>glVertex3f 3.2</code>)</div>
     </div>
 
     <script>
-      var m = 0;
-
       function extractor(query) 
       {
         var result = /([^\s]+)$/.exec(query);
@@ -37,6 +35,7 @@
         return query.split(' ').length;
       }
 
+      // http://stackoverflow.com/questions/12662824/twitter-bootstrap-typeahead-multiple-values
       $("#glquery").typeahead({ minLength: 2
         , source: function(query, process) 
         {
