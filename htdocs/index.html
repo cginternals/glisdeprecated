@@ -35,12 +35,20 @@
 
           <div class="alert alert-warning">
             <button type="button" class="close" data-dismiss="alert">&times</button>
-            <strong>note:</strong> this service is currently work in progress. For now bootstrap ui and typeahead works, suggesting gl api only. <a href="glquery.php">glquery.php</a> already returns xml results for some queries. Next step is the presentation of those results. So stay tuned, and spread the word!</div>
+            <strong>note:</strong> this service is currently work in progress. It will be a search that provides information about the deprecation status of a given OpenGL identifier. For now bootstrap ui and typeahead works, suggesting gl api only. <a href="glquery.php">glquery.php</a> already returns xml results for some queries (commands, enums, not types nor extensions). Next step is the presentation of those results. So stay tuned, and spread the word!</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="span8 offset2">
+          <pre id="glresult">
+          </pre>
         </div>
       </div>
     </div>
 
-    <footer class="navbar navbar-fixed-bottom container">
+    <footer class="navbar navbar-fixed-bottom">
+      <div class="container">
         <div class="offset2 span8">
           <ul class="nav nav-pills">
             <li class="disabled"><a href="#">Query</a></li>
@@ -50,6 +58,7 @@
             <li><a href="#">Impressum</a></li>
           </ul>
         </div>
+      </div>
     </footer>
 
     <script>
@@ -63,11 +72,32 @@
 
       function mode()
       {
+        if($("#glquery").val().length == 0)
+          return 0;
+
         var query = $("#glquery").val();
         query = query.replace(/(^\s*)|(\s*$)/gi,"");
         query = query.replace(/[ ]{2,}/gi," ");
         return query.split(' ').length;
       }
+
+      function glquery(query)
+      {
+        query = query.split(' ');
+
+        $.post(
+            '/glquery.php'
+          , { 'query': query[0] }
+          , function(data) { $("#glresult").text(data); }); 
+
+        $("#glresult").show();
+      }
+
+      $("#glquery").keyup(function () 
+        {
+          if(mode() == 0)
+            $("#glresult").hide();
+        }).keyup();
 
       // http://stackoverflow.com/questions/12662824/twitter-bootstrap-typeahead-multiple-values
       $("#glquery").typeahead({ minLength: 2
@@ -80,7 +110,12 @@
         }
         , updater: function(item) 
         {
-          return this.$element.val().replace(/[^\s]*$/,'') + item + ' ';
+          query = this.$element.val().replace(/[^\s]*$/,'') + item + (1 == mode() ? ' ' : '');
+
+          if(mode() == 1)
+            glquery(query);
+
+          return query;
         }
         , matcher: function (item) 
         {

@@ -150,15 +150,42 @@
 		queryRelatingExtensions($glxpath, $document, 'enum', $query, $extensions);
 	}
 
-	ini_set('error_reporting', E_ALL-E_NOTICE);
-	ini_set('display_errors', 1);
+	function value($request, $default)
+	{
+		if(!isset($_GET[$request]))
+		{
+			if(!isset($_POST[$request]))
+				return $default;
+			else
+				return $_POST[$request];	
+		}
+		else
+			return $_GET[$request];
+	}
+
+	function exists($request)
+	{
+		return isset($_GET[$request]) || isset($_POST[$request]);
+	}
 
 
-	if(!isset($_GET["query"]))
+	//ini_set('error_reporting', E_ALL-E_NOTICE);
+	ini_set('display_errors', 0);
+
+
+	$xsl = 'href="glresult.xsl" type="text/xsl"';  
+	$stylesheet = new DOMProcessingInstruction('xml-stylesheet',$xsl);
+
+	$result = new DOMDocument('1.0');
+	$result->formatOutput = true;
+	$result->appendChild($stylesheet); 
+
+	$query = value("query", "");
+	if(empty($query))
+	{
+		echo $result->saveXML();
 		return;
-
-	$query = $_GET["query"];
-
+	}
 
 	// load gl spec
 
@@ -166,9 +193,6 @@
 	$gldoc->load('gl.xml');
 
 	$glxpath = new Domxpath($gldoc);
-
-	$result = new DOMDocument('1.0');
-	$result->formatOutput = true;
 
 	$glquery = createAndAttachNode($result, 'glquery');
 
