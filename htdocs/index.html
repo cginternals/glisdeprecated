@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <meta charset="utf-8">
     <title>glIsDeprecated</title>
@@ -7,16 +8,49 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="css/glquery.css" rel="stylesheet" media="screen">
   </head>
+
   <body>
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
+
     <div class="container">
-      <br/>
-      <input id="glquery" class="span12 code" type="text" data-provide="typeahead" autocomplete="off">
-        <div class="alert alert-info">
-        <button type="button" class="close" data-dismiss="alert">×</button>
-        <strong>query usage:</strong> <code>&ltopengl-keyword&gt [&ltopengl-version&gt]</code> (e.g., <code>glVertex3f 3.2</code>)</div>
+      <header class="row">
+        <div class="offset3 span6">
+          <img src="img/glisdeprecated-logo.svg" alt="logo">
+        </div>
+      </header>
+      
+      <div class="row control-group">
+          <div class="offset2">
+            <input id="glquery" class="code span8" type="text" data-provide="typeahead" autocomplete="off" placeholder="<opengl-keyword> [<opengl-version>]">
+          </div>
+      </div>
+      
+      <div class="row">
+        <div class="span8 offset2">
+          <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times</button>
+            <strong>query usage:</strong> <code>&ltopengl-keyword&gt [&ltopengl-version&gt]</code> (e.g., <code>glVertex3f 3.2</code>)
+          </div>
+
+          <div class="alert alert-warning">
+            <button type="button" class="close" data-dismiss="alert">&times</button>
+            <strong>note:</strong> this service is currently work in progress. For now bootstrap ui and typeahead works, suggesting gl api only. <a href="glquery.php">glquery.php</a> already returns xml results for some queries. Next step is the presentation of those results. So stay tuned, and spread the word!</div>
+        </div>
+      </div>
     </div>
+
+    <footer class="navbar navbar-fixed-bottom container">
+        <div class="offset2 span8">
+          <ul class="nav nav-pills">
+            <li class="disabled"><a href="#">Query</a></li>
+            <li><a href="http://www.opengl.org/registry">OpenGL Registry</a></li>
+            <li><a href="https://github.com/cgcostume/glisdeprecated">glIsDeprecated on GitHub</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Impressum</a></li>
+          </ul>
+        </div>
+    </footer>
 
     <script>
       function extractor(query) 
@@ -57,5 +91,6 @@
         }
       });
     </script> 
+
   </body>
 </html>
