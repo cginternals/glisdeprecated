@@ -135,7 +135,7 @@
 	$query = "\"".strtolower($query)."\"";
 
 	$limit = value("limit", 8);
-	$mode = value("mode", 1);
+//	$mode = value("mode", 1);
 
 	// load gl spec
 
@@ -144,18 +144,18 @@
 
 	$glxpath = new Domxpath($gldoc);
 
-	switch($mode)
-	{
-	case 1:
+//	switch($mode)
+//	{
+//	case 1:
 		queryCommand($glxpath, $results, $query);
 		queryEnum($glxpath, $results, $query);
 		queryType($glxpath, $results, $query);
 		queryExtension($glxpath, $results, $query);
-		break;
-	case 2:
-		queryFeature($glxpath, $results, $query);
-		break;
-	}
+//		break;
+//	case 2:
+//		queryFeature($glxpath, $results, $query);
+//		break;
+//	}
 
 	$results = sortAndClamp($results, $query, $limit);
 	echo json_encode($results);

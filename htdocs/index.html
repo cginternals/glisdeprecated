@@ -22,16 +22,16 @@
       
       <div class="row control-group">
           <div class="offset2">
-            <input id="glquery" class="code span8" type="text" data-provide="typeahead" autocomplete="off" placeholder="<opengl-keyword> [<opengl-version>]">
+            <input id="glquery" class="code span8" type="text" data-provide="typeahead" autocomplete="off" placeholder="<OpenGL function, type, enum, or extension>">
           </div>
       </div>
       
       <div class="row">
         <div class="span8 offset2">
-          <div class="alert alert-success">
+          <!--<div class="alert alert-success">
             <button type="button" class="close" data-dismiss="alert">&times</button>
             <strong>query usage:</strong> <code>&ltopengl-keyword&gt [&ltopengl-version&gt]</code> (e.g., <code>glVertex3f 3.2</code>)
-          </div>
+          </div>-->
 
           <div class="alert alert-warning">
             <button type="button" class="close" data-dismiss="alert">&times</button>
@@ -70,17 +70,6 @@
         return '';
       }
 
-      function mode()
-      {
-        if($("#glquery").val().length == 0)
-          return 0;
-
-        var query = $("#glquery").val();
-        query = query.replace(/(^\s*)|(\s*$)/gi,"");
-        query = query.replace(/[ ]{2,}/gi," ");
-        return query.split(' ').length;
-      }
-
       function glquery(query)
       {
         query = query.split(' ');
@@ -95,7 +84,7 @@
 
       $("#glquery").keyup(function () 
         {
-          if(mode() == 0)
+          if($("#glquery").val().length == 0)
             $("#glresult").hide();
         }).keyup();
 
@@ -105,24 +94,15 @@
         {
           $.post(
             '/gltypeahead.php'
-          , { 'query': extractor(query), 'limit': 8, 'mode': mode() }
+          , { 'query': extractor(query), 'limit': 8 }
           , function(data) { process(JSON.parse(data)); }); 
         }
         , updater: function(item) 
         {
-          query = this.$element.val().replace(/[^\s]*$/,'') + item + (1 == mode() ? ' ' : '');
-
-          if(mode() == 1)
-            glquery(query);
+          query = this.$element.val().replace(/[^\s]*$/,'') + item;
+          glquery(query);
 
           return query;
-        }
-        , matcher: function (item) 
-        {
-          var tquery = extractor(this.query);
-          if(!tquery)
-            return false;
-          return ~item.toLowerCase().indexOf(tquery.toLowerCase())
         }
       });
     </script> 
