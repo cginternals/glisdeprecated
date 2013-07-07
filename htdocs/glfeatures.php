@@ -76,4 +76,13 @@
         foreach($gldates as $key => $value)
             echo "$(\"#gl$glids[$key]\").tooltip({title: '$value', placement: 'bottom'});";
     }
+
+    function echoGLFeaturesArray()
+    {
+        global $glids;
+
+        echo "\nvar featureIDs = new Array();\n";
+        foreach($glids as $key => $value)
+            echo "featureIDs[\"$key\"] = \"#gl$value\";\n";
+    }
 ?>

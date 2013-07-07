@@ -216,7 +216,7 @@
 //	$stylesheet = new DOMProcessingInstruction('xml-stylesheet',$xsl);
 
 	$result = new DOMDocument('1.0');
-	$result->preserveWhiteSpace = false;
+	$result->preserveWhiteSpace = true;
 	$result->formatOutput = true;
 //	$result->appendChild($stylesheet); 
 

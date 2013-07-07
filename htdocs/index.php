@@ -12,7 +12,7 @@
   </head>
 
   <body>
-    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 
     <div class="container">
@@ -32,11 +32,6 @@
 
       <div class="row">
         <div class="span8 offset2">
-          <!--<div class="alert alert-success">
-            <button type="button" class="close" data-dismiss="alert">&times</button>
-            <strong>query usage:</strong> <code>&ltopengl-keyword&gt [&ltopengl-version&gt]</code> (e.g., <code>glVertex3f 3.2</code>)
-          </div>-->
-
           <div class="alert alert-warning">
             <button type="button" class="close" data-dismiss="alert">&times</button>
             <strong>note:</strong> this service is currently work in progress. It will be a search that provides information about the deprecation status of a given OpenGL identifier. For now bootstrap ui and typeahead works, suggesting gl api only. <a href="glquery.php">glquery.php</a> already returns xml results for some queries (commands, enums, not types nor extensions). Next step is the presentation of those results. So stay tuned, and spread the word!</div>
@@ -67,22 +62,47 @@
     </footer>
 
     <script>
-      function extractor(query) 
+
+      <?php echoGLFeaturesArray(); ?>
+
+      function process(response)
       {
-        var result = /([^\s]+)$/.exec(query);
-        if(result && result[1])
-          return result[1].trim();
-        return '';
+        //$("#glresult").text(response.evaluate("/glquery/command/features/require/@number"));
+
+        //$xml = response;
+        //$test = $(response).find("glquery").evaluate();
+
+        var require = parseFloat($(response).find("require[api='gl']").attr("number"));
+        var remove  = parseFloat($(response).find("remove[api='gl']").attr("number"));
+
+        for(var id in featureIDs)
+        {
+          if($(featureIDs[id]).hasClass('bar-success'))
+            $(featureIDs[id]).removeClass('bar-success').addClass('bar-danger');
+          if($(featureIDs[id]).hasClass('bar-warning'))
+            $(featureIDs[id]).removeClass('bar-warning').addClass('bar-danger');
+        }
+
+        for(var id in featureIDs)
+          if(parseFloat(id) >= remove)
+            $(featureIDs[id]).toggleClass('bar-danger bar-warning');
+          else if(parseFloat(id) >= require)
+            $(featureIDs[id]).toggleClass('bar-danger bar-success');
+        
+        $("#glresult").text((new XMLSerializer()).serializeToString(response));
       }
 
       function glquery(query)
       {
         query = query.split(' ');
 
-        $.post(
-            '/glquery.php'
-          , { 'query': query[0] }
-          , function(data) { $("#glresult").text(data); }); 
+        $.ajax({
+          url: 'glquery.php'
+        , type: 'post'
+        , data: { 'query': query[0] }
+        , dataType: 'xml'
+        , success: function(response) { process(response); }
+        , error:function() { /* TODO */}});
 
         $("#glresult").show();
       }
@@ -99,7 +119,7 @@
         {
           $.post(
             '/gltypeahead.php'
-          , { 'query': extractor(query), 'limit': 8 }
+          , { 'query': query, 'limit': 8 }
           , function(data) { process(JSON.parse(data)); }); 
         }
         , updater: function(item) 
