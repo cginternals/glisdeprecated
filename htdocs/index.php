@@ -32,6 +32,17 @@
 
       <div class="row">
         <div class="span8 offset2">
+          <div class="alert alert-info">
+            <button type="button" class="close" data-dismiss="alert">&times</button>
+            <strong>feature line color coding:</strong>
+            <span class="label label-important">unsupported</span>
+            <span class="label label-success">core profile</span>
+            <span class="label label-warning">compatibility profile</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span8 offset2">
           <div class="alert alert-warning">
             <button type="button" class="close" data-dismiss="alert">&times</button>
             <strong>note:</strong> this service is currently work in progress. It will be a search that provides information about the deprecation status of a given OpenGL identifier. For now bootstrap ui and typeahead works, suggesting gl api only. <a href="glquery.php">glquery.php</a> already returns xml results for some queries (commands, enums, not types nor extensions). Next step is the presentation of those results. So stay tuned, and spread the word!</div>
