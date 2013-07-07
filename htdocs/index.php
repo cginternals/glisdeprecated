@@ -1,3 +1,5 @@
+<?php require('glfeatures.php'); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,12 +22,14 @@
         </div>
       </header>
       
-      <div class="row control-group">
+      <div class="row">
           <div class="offset2">
             <input id="glquery" class="code span8" type="text" data-provide="typeahead" autocomplete="off" placeholder="<OpenGL function, type, enum, or extension>">
           </div>
       </div>
       
+      <?php echoGLFeatureBar(); ?>
+
       <div class="row">
         <div class="span8 offset2">
           <!--<div class="alert alert-success">
@@ -45,6 +49,7 @@
           </pre>
         </div>
       </div>
+
     </div>
 
     <footer class="navbar navbar-fixed-bottom">
@@ -105,6 +110,9 @@
           return query;
         }
       });
+
+      <?php echoGLFeatureBarTooltips(); ?>    
+
     </script> 
 
   </body>
