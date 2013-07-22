@@ -16,6 +16,7 @@
     , '4.1' => '25 July 2010'
     , '4.2' => '27 April 2012'
     , '4.3' => '14 February 2013'
+    , '4.4' => '21 July 2013'
     );
 
     $glspecuris = array(
@@ -35,6 +36,7 @@
     , '4.1' => 'http://www.opengl.org/registry/doc/glspec41.compatibility.20100725.pdf'
     , '4.2' => 'http://www.opengl.org/registry/doc/glspec42.compatibility.20120427.pdf'
     , '4.3' => 'http://www.opengl.org/registry/doc/glspec43.compatibility.20130214.pdf'
+    , '4.4' => 'http://www.opengl.org/registry/doc/glspec44.compatibility.pdf'
     );
 
     $glids = array(
@@ -54,6 +56,7 @@
     , '4.1' => '41'
     , '4.2' => '42'
     , '4.3' => '43'
+    , '4.4' => '44'
     );
 
     function echoGLFeatureBar()

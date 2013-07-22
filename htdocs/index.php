@@ -62,11 +62,10 @@
       <div class="container">
         <div class="offset2 span8">
           <ul class="nav nav-pills">
-            <li class="disabled"><a href="#">Query</a></li>
             <li><a href="http://www.opengl.org/registry">OpenGL Registry</a></li>
             <li><a href="https://github.com/cgcostume/glisdeprecated">glIsDeprecated on GitHub</a></li>
             <li><a href="#">About</a></li>
-            <li><a href="#">Impressum</a></li>
+            <li><a href="#">&copy; 2013 Daniel Limberger</a></li>
           </ul>
         </div>
       </div>
