@@ -18,7 +18,9 @@
     <div class="container">
       <header class="row">
         <div class="offset3 span6">
-          <img src="img/glisdeprecated-logo.svg" alt="logo">
+          <!--[if lte IE 8]><img src="img/glisdeprecated-logo.png" height="100%" alt="glisdeprecated-logo" /><![endif]-->
+          <!--[if gt IE 8]> <img src="img/glisdeprecated-logo.svg" height="100%" alt="glisdeprecated-logo" type="image/svg+xml" /><![endif]-->
+          <!--[if !IE]> --> <img src="img/glisdeprecated-logo.svg" height="100%" alt="glisdeprecated-logo" type="image/svg+xml" /><!-- <![endif]-->
         </div>
       </header>
       
